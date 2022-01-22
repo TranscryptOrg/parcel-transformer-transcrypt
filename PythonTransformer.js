@@ -66,6 +66,9 @@ exports.default = new Transformer({
             asset.filePath,
         );
 
+        // TODO: Check to make sure Transcrypt is installed
+        // TODO: Check that Transcrypt version matches Python version
+
         // Prepare Transcrypt CLI options
         let transcryptConfig = DEFAULT_PACKAGE_CONFIG[PACKAGE_KEY];
 
@@ -151,9 +154,12 @@ exports.default = new Transformer({
             const runInfo = getTranscryptProjectInfo(runInfoFile)
             if (runInfo.hasOwnProperty('modules')) {
                 const modules = runInfo['modules'];
-                const onlySourceModules = modules.filter(module => !module['source'].endsWith('__runtime__.py'))
+                const onlySourceModules = modules.filter(module => !module['source'].includes(path.join('site-packages', 'transcrypt')))
                 onlySourceModules.forEach((module) => {
-                    const absoluteModulePath = path.join(projectRoot, module['source'])
+                    let absoluteModulePath = module['source'];
+                    if (!path.isAbsolute(absoluteModulePath)) {
+                        absoluteModulePath = path.join(projectRoot, module['source']);
+                    }
                     asset.invalidateOnFileChange(absoluteModulePath)
                     // logger.info({message: `Watching file '${absoluteModulePath}'`});
                 });
@@ -183,4 +189,3 @@ exports.default = new Transformer({
         return [asset];
     }
 });
-
