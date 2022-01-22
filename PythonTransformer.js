@@ -173,7 +173,7 @@ exports.default = new Transformer({
         }
         // logger.warn({message: `importPath: ${importPath}`});
 
-        // logger.info({message: `\nbla\nbla\nbla\nbla\nbla\nbla\nbla\nbla\nbla\nbla\nbla\nbla\nbla\nbla\nbla\nbla\nbla\nbla\nbla`});
+        // And finally we send it back to Parcel to bundle
         const code = `export * from "${importPath}";`;
         asset.setCode(code);
         // asset.setMap(map);
