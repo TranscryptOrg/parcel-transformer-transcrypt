@@ -47,6 +47,14 @@ _.parcelrc_
 }
 ```
 
+### FAQ
+- What does this Parcel plugin do?
+- How does this plugin compare to the one for Parcel V1?
+- What if I don't want to use Transcrypt?
+
+
 ### Notes
 This has been tested with Node version 16 and npm version 8 on Linux
+
+If you are using Linux and start getting errors stating *No space left on device*, see the Parcel website for [how to fix it](https://parceljs.org/features/development/#linux%3A-no-space-left-on-device).
 
