@@ -8,12 +8,12 @@ But that said, if you try it out and find a problem with it, please [submit an i
 ### Installation
 This Parcel transformer can be installed with npm or yarn:
 ```bash
-npm install parcel-transformer-transcrypt -save-dev
+npm install parcel-transformer-transcrypt --save-dev
 ```
 
 To get the latest unpublished version, you can also install it directly from the GitHub repository:
 ```bash
-npm install https://github.com/JennaSys/parcel-transformer-transcrypt -save-dev
+npm install https://github.com/JennaSys/parcel-transformer-transcrypt --save-dev
 ```
 
 ### Dependencies
