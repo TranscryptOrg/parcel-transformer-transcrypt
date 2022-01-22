@@ -88,9 +88,24 @@ The output folder you specify in the arguments should be relative to the project
 
 
 ### FAQ
-- What does this Parcel plugin do?
-- How does this plugin compare to the one for Parcel V1?
-- What if I don't want to use Transcrypt?
+- **_What does this Parcel plugin do?_**  
+  Instead of having to run Transcrypt manually and then use those generated JavaScript files as the input to what you want to bundle with Parcel, you can just run Parcel and it will run Transcrypt for you when it sees a file with a .py file extension.
+  
+  For example, if Parcel sees a Python file specified as the `src` in an HTML script tag, it will have Transcrypt generate the Javascript file and then automatically update the HTML script tag with the name of the generated JavaScript file. 
+  
+  As a bonus, anytime you make a change to one of your Python files while Parcel has it's development server running in "watch" mode, your updated Python files will automatically be Transpiled by Transcrypt.
+- **_How does this plugin compare to the one for Parcel V1?_**  
+  _It is very similar:_
+  - It mostly works seamlessly with the default configuration
+  - It installs as a JavaScript development dependency
+  - The configuration can be customized by adding entries to _package.json_
+
+  _But there are also a few differences:_
+  - The output folder is configurable
+  - Parcel file watch works on _all_ transpiled Python files in development mode and not just the entry point
+  - It doesn't need to be patched before using it :-)
+- **_What if I don't want to use Transcrypt?_**  
+  Then you will have to use a different Parcel transformer for Python other than this one.  It is a hard dependency.
 
 
 ### Notes
