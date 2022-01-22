@@ -19,7 +19,7 @@ Obviously Parcel V2 must be installed:
 ```bash
 npm install parcel -D
 ```
-This plugin also requires installation of the Transcrypt transpiler.
+This plugin also requires installation of the Transcrypt transpiler.  In order for Transcrypt to properly parse the AST of your Python code, the version of Python you use with Transcrypt must match the version of Transcrypt it was designed for.
 
 It is recommended to install Transcrypt into a virtual environment for your project.  This can be accomplished with the following commands:
 
@@ -40,7 +40,14 @@ python -m pip install transcrypt==3.7.16
 ### Configuration
 Set up your dev and build scripts to build your project in the _package.json_ file for the project.
 
-You will need to create a _.parcelrc_ file to let Parcel know how to handle the Python files:
+Sample scripts in the _package.json_ file for Parcel might look similar to this:
+```json
+  "scripts": {
+    "start": "NODE_ENV=development parcel --log-level info src/index.html --dist-dir dist/dev --port 8080",
+    "build": "NODE_ENV=production parcel build --log-level info src/index.html --no-source-maps --dist-dir dist/prod --no-cache"
+  },
+```
+You will also need to create a _.parcelrc_ file in the same folder as the _package.json_ file to let Parcel know how to handle the Python files:
 
 _.parcelrc_
 ```json
