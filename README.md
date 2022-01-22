@@ -1,6 +1,9 @@
 # parcel-transformer-transcrypt
 ### A Python to JavaScript transformer for Parcel V2 using the Transcrypt transpiler
-**_Consider this Parcel transformer to be in beta mode and still a work in progress._**
+_Consider this Parcel transformer to be in beta mode and still a work in progress._    
+**USE AT YOUR OWN RISK!**
+
+But that said, if you try it out and find a problem with it, please [submit an issue on GitHub](https://github.com/JennaSys/parcel-transformer-transcrypt/issues) and help make it better.
 
 ### Installation
 This Parcel transformer can be installed with npm or yarn:
@@ -45,7 +48,7 @@ Sample scripts in the _package.json_ file for Parcel might look similar to this:
   "scripts": {
     "start": "NODE_ENV=development parcel --log-level info src/index.html --dist-dir dist/dev --port 8080",
     "build": "NODE_ENV=production parcel build --log-level info src/index.html --no-source-maps --dist-dir dist/prod --no-cache"
-  },
+  }
 ```
 You will also need to create a _.parcelrc_ file in the same folder as the _package.json_ file to let Parcel know how to handle the Python files:
 
