@@ -43,7 +43,7 @@ python -m pip install transcrypt==3.7.16
 ### Configuration
 Set up your dev and build scripts to build your project in the _package.json_ file for the project.
 
-Sample scripts in the _package.json_ file for Parcel might look similar to this:
+An example of scripts in the _package.json_ file for Parcel might look similar to this:
 ```json
   "scripts": {
     "start": "NODE_ENV=development parcel --log-level info src/index.html --dist-dir dist/dev --port 8080",
