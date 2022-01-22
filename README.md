@@ -62,6 +62,31 @@ _.parcelrc_
 }
 ```
 
+To override the default settings for Transcrypt, you can add a key to the _package.json_ file with the desired [CLI configuration](https://www.transcrypt.org/docs/html/installation_use.html#available-command-line-switches) information:
+```json
+  "parcel-transformer-transcrypt": {
+    "command": "python -m transcrypt",
+    "arguments": [
+      "--nomin",
+      "--map",
+      "--verbose"
+    ]
+  }
+```
+
+Transcrypt normally puts the files it generates in a folder called `__target__` that is created in the same folder as the source files you are processing.
+Unlike that behavior, by default, this Parcel transformer will put Transcrypt's generated files in a folder named `.build` that will be created in the root folder of the project (where the _package.json_ file resides and where you run `npm` commands from).
+You can override the location of this build folder by adding an argument to the configuration as shown above:
+```json
+    "arguments": [
+      "--nomin",
+      "--map",
+      "--outdir src/__target__"  
+    ]
+```
+The output folder you specify in the arguments should be relative to the project root folder.
+
+
 ### FAQ
 - What does this Parcel plugin do?
 - How does this plugin compare to the one for Parcel V1?
