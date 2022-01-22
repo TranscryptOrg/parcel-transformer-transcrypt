@@ -22,7 +22,7 @@ Obviously Parcel V2 must be installed:
 ```bash
 npm install parcel -D
 ```
-This plugin also requires installation of the Transcrypt transpiler.  In order for Transcrypt to properly parse the AST of your Python code, the version of Python you use with Transcrypt must match the version of Transcrypt it was designed for.
+This plugin also requires installation of the [Transcrypt](https://www.transcrypt.org) transpiler.  In order for Transcrypt to properly parse the AST of your Python code, the version of Python you use with Transcrypt must match the version of Transcrypt it was designed for.
 
 It is recommended to install Transcrypt into a virtual environment for your project.  This can be accomplished with the following commands:
 
