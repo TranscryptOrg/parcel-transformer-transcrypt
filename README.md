@@ -1,6 +1,6 @@
 # parcel-transformer-transcrypt
 ### A Python to JavaScript transformer for Parcel V2 using the Transcrypt transpiler
-
+**_Consider this Parcel transformer to be in beta mode and still a work in progress._**
 
 ### Installation
 This Parcel transformer can be installed with npm or yarn:

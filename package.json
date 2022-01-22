@@ -1,0 +1,33 @@
+{
+  "name": "parcel-transformer-transcrypt",
+  "version": "0.1.0",
+  "description": "Python to JavaScript transformer for Parcel V2 using the Transcrypt transpiler",
+  "main": "PythonTransformer.js",
+  "engines": {
+    "parcel": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JennaSys/parcel-transformer-transcrypt"
+  },
+  "bugs": {
+    "url": "https://github.com/JennaSys/parcel-transformer-transcrypt/issues"
+  },
+  "keywords": [
+    "python",
+    "parcel",
+    "transcrypt",
+    "plugin",
+    "transformer",
+    "transpiler"
+  ],
+  "files": [
+    "./PythonTransformer.js"
+  ],
+  "author": "JennaSys",
+  "license": "MIT",
+  "dependencies": {
+    "@parcel/plugin": "^2.0.0",
+    "@parcel/utils": "^2.0.0"
+  }
+}
