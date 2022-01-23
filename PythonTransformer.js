@@ -179,13 +179,14 @@ exports.default = new Transformer({
 
         // Make sure that transcrypt won't kill the source files
         const absoluteOutdir = path.resolve(path.join(fileInfo.dir, outdir));
-        if (absoluteOutdir === fileInfo.dir) {
-            const msg1 = "Transcrypt output folder can not be the same as the source file folder!";
+        if (absoluteOutdir === fileInfo.dir || absoluteOutdir === projectRoot) {
+            const msg1 = "Transcrypt output folder can not be the same as the project root or the source file folder!";
             const msg2 = `--Transcrypt output folder: ${absoluteOutdir}`;
             const msg3 = `--Source folder:            ${fileInfo.dir}`;
-            const msg4 = "\nContinuing could cause a loss of source content so stopping build.";
-            const msg5 = "(Try configuring a different Transcrypt output folder in package.json.)"
-            throw new Error(`\n${msg1}\n${msg2}\n${msg3}\n${msg4}\n${msg5}\n`)
+            const msg4 = `--Project root:             ${projectRoot}`;
+            const msg5 = "\nContinuing could cause a loss of source content so stopping build.";
+            const msg6 = "(Try configuring a different Transcrypt output folder in package.json.)"
+            throw new Error(`\n${msg1}\n${msg2}\n${msg3}\n${msg4}\n${msg5}\n${msg6}\n`)
         }
 
         // Prepare transcrypt CLI command
