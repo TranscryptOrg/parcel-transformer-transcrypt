@@ -4,7 +4,7 @@ const child_process = require("child_process");
 const path = require('path');
 const fs = require('fs');
 
-const {getVersion} = require('./versionUtil')
+const versionUtil = require('./versionUtil')
 
 
 // This Python transformer was built on the shoulders of the original parcel-plugin-transcrypt package
@@ -39,8 +39,8 @@ const DEFAULT_PACKAGE_CONFIG = {
 
 // Get the versions of Python and Transcrypt being used
 const validateVersions = (command) => {
-    const pythonVersion = getVersion(command, "python");
-    const transcryptVersion = getVersion(command, "transcrypt");
+    const pythonVersion = versionUtil.getVersion(command, "python");
+    const transcryptVersion = versionUtil.getVersion(command, "transcrypt");
     // console.log('Python Version:', pythonVersion);
     // console.log('Transcrypt Version:', transcryptVersion);
 
