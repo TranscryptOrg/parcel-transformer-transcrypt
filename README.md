@@ -40,6 +40,12 @@ python3.7 -m venv venv
 python -m pip install transcrypt==3.7.16
 ```
 
+Note that when run, before the build process starts, this transformer will automatically detect the version of Python and Transcrypt being used by running the following commands in the background:
+- `python --version`
+- `transcrypt --help`
+
+To bypass this auto-detect behavior, you can explicitly specify the Transcrypt version in the _package.json_ file as indicated in the next section.
+
 ### Configuration
 Set up your dev and build scripts to build your project in the _package.json_ file for the project.
 
@@ -62,9 +68,10 @@ _.parcelrc_
 }
 ```
 
-To override the default settings for Transcrypt, you can add a key to the _package.json_ file with the desired [CLI configuration](https://www.transcrypt.org/docs/html/installation_use.html#available-command-line-switches) information:
+To override the default settings for Transcrypt, you can add a `"parcel-transformer-transcrypt"` key to the _package.json_ file with the desired [CLI configuration](https://www.transcrypt.org/docs/html/installation_use.html#available-command-line-switches) information:
 ```json
   "parcel-transformer-transcrypt": {
+    "transcryptVersion": "3.9",
     "command": "python -m transcrypt",
     "arguments": [
       "--nomin",
@@ -73,9 +80,11 @@ To override the default settings for Transcrypt, you can add a key to the _packa
     ]
   }
 ```
+The `"transcryptVersion"`, `"command"`, and `"arguments"` keys are all optional.  Default values wil be used if not supplied.
 
-Transcrypt normally puts the files it generates in a folder called `__target__` that is created in the same folder as the source files you are processing.
-Unlike that behavior, by default, this Parcel transformer will put Transcrypt's generated files in a folder named `.build` that will be created in the root folder of the project (where the _package.json_ file resides and where you run `npm` commands from).
+Transcrypt normally puts the files it generates in a folder called `__target__` that is created in the same folder as the source files you are processing. This default behavior may not be desired in many cases.  
+
+If you are using Transcrypt 3.9 however, this Parcel transformer will put Transcrypt's generated files in a folder named `.build` that will be created in the root folder of the project (where the _package.json_ file resides and where you run `npm` commands from).
 You can override the location of this build folder by adding an argument to the configuration as shown above:
 ```json
     "arguments": [
@@ -84,7 +93,9 @@ You can override the location of this build folder by adding an argument to the 
       "--outdir src/__target__"  
     ]
 ```
-The output folder you specify in the arguments should be relative to the project root folder.
+The output folder you specify in the arguments should be relative to the project root folder.  
+
+_Note that the `--outdir` directive is not valid for Transcrypt version 3.7 and will be ignored in that case._
 
 
 ### FAQ
@@ -109,7 +120,13 @@ The output folder you specify in the arguments should be relative to the project
 
 
 ### Notes
-This has been tested with Node version 16 and npm version 8 on Linux
+This has been tested with:
+- Linux OS
+- Python/Transcrypt version 3.9
+- Python/Transcrypt version 3.7
+- Node version 16
+- npm version 8
+
 
 If you are using Linux and start getting errors stating *"No space left on device"*, see the Parcel website for [how to fix it](https://parceljs.org/features/development/#linux%3A-no-space-left-on-device).
 
