@@ -128,7 +128,7 @@ exports.default = new Transformer({
         const cmd = [
             transcryptConfig['command'],        // python3 -m transcrypt
             ...transcryptConfig['arguments'],   // --map --nomin --build ...
-            sourceFile                      // the file to transpile
+            sourceFile                          // the file to transpile
         ].join(' ');
         logger.info({message: `${cmd}\n`});
 
@@ -136,7 +136,7 @@ exports.default = new Transformer({
         // stays the same for all .py files in the run.
         const cmd_options = {'cwd': projectRoot, 'encoding': 'utf8',};
 
-        // And now time for the Transcrypt magic to happen!
+        // And it is now time for the Transcrypt magic to happen!
         try {
             let stdout = child_process.execSync(cmd, cmd_options).toString();
             logger.info({message: stdout});
@@ -148,13 +148,14 @@ exports.default = new Transformer({
         }
 
         // If in dev mode, get the Transcrypt Python module list and add
-        // each Python file that was processed to Parcel watched files
+        // each Python file that was processed to the Parcel watched files
         if (options.mode === 'development') {
             const runInfoFile = path.join(absoluteOutdir, fileInfo.name) + '.project';
             const runInfo = getTranscryptProjectInfo(runInfoFile)
             if (runInfo.hasOwnProperty('modules')) {
                 const modules = runInfo['modules'];
-                const onlySourceModules = modules.filter(module => !module['source'].includes(path.join('site-packages', 'transcrypt')))
+                const transcryptModules = path.join('site-packages', 'transcrypt');
+                const onlySourceModules = modules.filter(module => !module['source'].includes(transcryptModules))
                 onlySourceModules.forEach((module) => {
                     let absoluteModulePath = module['source'];
                     if (!path.isAbsolute(absoluteModulePath)) {
@@ -170,16 +171,16 @@ exports.default = new Transformer({
             }
         }
 
-        // Rather than read in and pass back the generated JavaScript, we just add
-        // a JS export here that points to the target file. For reference, this is
-        // the same approach that the Parcel V1 transcrypt plugin used.
+        // Rather than read in and pass back the generated JavaScript code, we just add
+        // a JS export here that points to the target file. For reference, this is the
+        // same approach that the Parcel V1 transcrypt plugin used.
         let importPath = path.join(outdir, fileInfo.name) + '.js';
         if (!importPath.startsWith('..' + path.sep)) {
             importPath = '.' + path.sep + importPath
         }
         // logger.warn({message: `importPath: ${importPath}`});
 
-        // And finally we send it back to Parcel to bundle
+        // And finally we send it back to Parcel for bundling
         const code = `export * from "${importPath}";`;
         asset.setCode(code);
         // asset.setMap(map);
