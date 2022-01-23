@@ -4,7 +4,7 @@ const child_process = require("child_process");
 const path = require('path');
 const fs = require('fs');
 
-const {getVersion} = require('./VersionUtil')
+const {getVersion} = require('./versionUtil')
 
 
 // This Python transformer was built on the shoulders of the original parcel-plugin-transcrypt package

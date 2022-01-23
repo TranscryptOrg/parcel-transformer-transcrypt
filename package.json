@@ -21,10 +21,6 @@
     "transformer",
     "transpiler"
   ],
-  "files": [
-    "./PythonTransformer.js",
-    "./VersionUtil.js"
-  ],
   "author": "JennaSys",
   "license": "MIT",
   "dependencies": {
