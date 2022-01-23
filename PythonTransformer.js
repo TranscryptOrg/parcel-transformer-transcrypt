@@ -1,8 +1,10 @@
 const {Transformer} = require('@parcel/plugin');
 const {relativeUrl} = require('@parcel/utils');
 const child_process = require("child_process");
-const path = require("path");
-const fs = require('fs')
+const path = require('path');
+const fs = require('fs');
+
+const {getVersion} = require('./VersionUtil')
 
 
 // This Python transformer was built on the shoulders of the original parcel-plugin-transcrypt package
@@ -19,6 +21,7 @@ const OUTPUT_DIR = '.build'
 // (Note that the comments will need to be removed since they are not valid JSON)
 const DEFAULT_PACKAGE_CONFIG = {
     "parcel-transformer-transcrypt": {
+        "transcryptVersion": "3.9",
         "command": "python -m transcrypt",
         "arguments": [
             /*  note that --build should normally not be used because multiple .py entry points         */
@@ -34,6 +37,32 @@ const DEFAULT_PACKAGE_CONFIG = {
     }
 };
 
+// Get the versions of Python and Transcrypt being used
+const validateVersions = (command) => {
+    const pythonVersion = getVersion(command, "python");
+    const transcryptVersion = getVersion(command, "transcrypt");
+    // console.log('Python Version:', pythonVersion);
+    // console.log('Transcrypt Version:', transcryptVersion);
+
+    if (transcryptVersion === null) {
+        throw new Error(`Transcrypt command '${command}' is not valid. Stopping build.`);
+    }
+
+    if (transcryptVersion === '0.0') {
+        const msg1 = "Transcrypt does not appear to be installed. Stopping build.";
+        const msg2 = "The Transcrypt Python transpiler can be installed using: 'pip install transcrypt'";
+        const msg3 = "If your are using a Python virtual environment, make sure it is activated before starting the build process";
+        throw new Error(`\n${msg1}\n${msg2}\n${msg3}\n`);
+    }
+
+    if (pythonVersion !== transcryptVersion) {
+        throw new Error(`Transcrypt version '${transcryptVersion}' does not match Python version '${pythonVersion}' that is being used. Stopping build.`);
+    }
+
+    return transcryptVersion;
+}
+
+// Read the generated Transcrypt project file
 const getTranscryptProjectInfo = (projectFile) => {
     if (fs.existsSync(projectFile)) {
         try {
@@ -45,6 +74,7 @@ const getTranscryptProjectInfo = (projectFile) => {
     return {};
 };
 
+//This is what we are here for...
 exports.default = new Transformer({
     async loadConfig({config}) {
         // load custom Transcrypt config (under the package key in package.json)
@@ -66,25 +96,13 @@ exports.default = new Transformer({
             asset.filePath,
         );
 
-        // TODO: Check to make sure Transcrypt is installed
-        // TODO: Check that Transcrypt version matches Python version
-
         // Prepare Transcrypt CLI options
         let transcryptConfig = DEFAULT_PACKAGE_CONFIG[PACKAGE_KEY];
 
-        // Add Transcrypt output folder to default config
-        let outdir = relativeUrl(
-            fileInfo.dir,
-            path.join(projectRoot, OUTPUT_DIR)  //transcrypt default output folder
-        );
-        let defaultArgs = transcryptConfig['arguments'];
-        defaultArgs.push(`--outdir ${outdir}`);
-        transcryptConfig = {...transcryptConfig, arguments: defaultArgs};
-        // logger.warn({message: `defaultConfig: ${JSON.stringify(transcryptConfig, null, 4)}\n`});
-
-        //Incorporate any transcrypt config existing in package.json
+        //Use transcrypt command config if it exists in package.json
         let pkgCommand = pkgConfig['command'];
         if (pkgCommand) {
+            logger.warn({message: "Using transcrypt command from package.json..."});
             if (!pkgCommand.includes('transcrypt')) {
                 const msg1 = `Config 'command' key in ${PACKAGE_KEY} does not appear to be valid: '${pkgCommand}'`;
                 const msg2 = `The value for ${PACKAGE_KEY}/command in package.json needs to be fixed.  Stopping build.`;
@@ -93,21 +111,66 @@ exports.default = new Transformer({
             transcryptConfig = {...transcryptConfig, command: pkgCommand};
         }
 
+        // Deal with transcrypt version issues
+        let transcryptVersion;
+        let pkgVersion = pkgConfig['transcryptVersion'];
+        if (pkgVersion) {
+            const re = /(^3\.\d{1,2})(?:\.\d{1,2})?$/g;
+            matches = pkgVersion.matchAll(re);
+            if (matches) {
+                version = Array.from(matches, m => m[1]);
+                if (version.length > 0) {
+                    logger.warn({message: `Use of Transcrypt version '${version[0]}' as specified in package.json file will be assumed.`});
+                    transcryptVersion = version[0];
+                }
+            }
+            if (!transcryptVersion) {
+                logger.warn({message: `Transcrypt version '${pkgVersion}' specified in package.json file is invalid and will be ignored.`});
+            }
+        }
+        if (!transcryptVersion) {
+            transcryptVersion = validateVersions(transcryptConfig['command']);
+            logger.warn({message: `Detected Transcrypt version ${transcryptVersion}`});
+        }
+        // logger.info({message: `Using Transcrypt version ${transcryptVersion}`});
+
+        let outdir;
+        if (transcryptVersion === '3.7') {
+            outdir = relativeUrl(
+                fileInfo.dir,
+                path.join(fileInfo.dir, '__target__')  //transcrypt default output folder
+            );
+        } else {
+            // Add Transcrypt output folder to default config
+            outdir = relativeUrl(
+                fileInfo.dir,
+                path.join(projectRoot, OUTPUT_DIR)
+            );
+            let defaultArgs = transcryptConfig['arguments'];
+            defaultArgs.push(`--outdir ${outdir}`);
+            transcryptConfig = {...transcryptConfig, arguments: defaultArgs};
+        }
+
         let pkgArgs = pkgConfig['arguments'];
         if (pkgArgs) {
+            logger.warn({message: "Using transcrypt args from package.json..."});
             const pkgOutdir = pkgArgs.filter(arg => arg.startsWith('--outdir '));
-            if (pkgOutdir.length === 0) {
+            if (pkgOutdir.length === 0 && transcryptVersion !== '3.7') {
                 // outdir was not supplied so use default
                 pkgArgs.push(`--outdir ${outdir}`);
             } else {
                 // outdir is relative to project root so calculate what that is...
                 pkgArgs = pkgArgs.filter(arg => !arg.startsWith('--outdir '));  // Remove config outdir from args
-                const pkgdir = pkgOutdir[0].replace('--outdir ', '').trim();  // Get the value only
-                outdir = relativeUrl(
-                    fileInfo.dir,
-                    path.join(projectRoot, pkgdir)
-                );
-                pkgArgs.push(`--outdir ${outdir}`);  // Put the relative outdir back into args
+                if (transcryptVersion !== '3.7') {
+                    const pkgdir = pkgOutdir[0].replace('--outdir ', '').trim();  // Get the value only
+                    outdir = relativeUrl(
+                        fileInfo.dir,
+                        path.join(projectRoot, pkgdir)
+                    );
+                    pkgArgs.push(`--outdir ${outdir}`);  // Put the relative outdir back into args
+                } else {
+                    logger.warn({message: "Argument '--outdir' is not valid with Transcrypt version 3.7 and will be ignored."});
+                }
             }
             transcryptConfig = {...transcryptConfig, arguments: pkgArgs};
         }
@@ -178,7 +241,6 @@ exports.default = new Transformer({
         if (!importPath.startsWith('..' + path.sep)) {
             importPath = '.' + path.sep + importPath
         }
-        // logger.warn({message: `importPath: ${importPath}`});
 
         // And finally we send it back to Parcel for bundling
         const code = `export * from "${importPath}";`;
