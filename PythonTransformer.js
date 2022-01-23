@@ -155,9 +155,10 @@ exports.default = new Transformer({
         if (pkgArgs) {
             logger.warn({message: "Using transcrypt args from package.json..."});
             const pkgOutdir = pkgArgs.filter(arg => arg.startsWith('--outdir '));
-            if (pkgOutdir.length === 0 && transcryptVersion !== '3.7') {
-                // outdir was not supplied so use default
-                pkgArgs.push(`--outdir ${outdir}`);
+            if (pkgOutdir.length === 0) {
+                if (transcryptVersion !== '3.7') {
+                    pkgArgs.push(`--outdir ${outdir}`);  // outdir was not supplied so use default
+                }
             } else {
                 // outdir is relative to project root so calculate what that is...
                 pkgArgs = pkgArgs.filter(arg => !arg.startsWith('--outdir '));  // Remove config outdir from args
