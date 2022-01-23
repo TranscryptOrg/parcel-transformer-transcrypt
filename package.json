@@ -23,7 +23,7 @@
   ],
   "files": [
     "./PythonTransformer.js",
-    "./VersionUtil.js"
+    "./versionUtil.js"
   ],
   "author": "JennaSys",
   "license": "MIT",
