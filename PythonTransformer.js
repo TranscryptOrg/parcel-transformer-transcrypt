@@ -134,6 +134,7 @@ exports.default = new Transformer({
         }
         // logger.info({message: `Using Transcrypt version ${transcryptVersion}`});
 
+        // Figure out what the default output folder should be for transcrypt
         let outdir;
         if (transcryptVersion === '3.7') {
             outdir = relativeUrl(
@@ -214,6 +215,7 @@ exports.default = new Transformer({
 
         // If in dev mode, get the Transcrypt Python module list and add
         // each Python file that was processed to the Parcel watched files
+        // TODO: Add option in config to skip file watch
         if (options.mode === 'development') {
             const runInfoFile = path.join(absoluteOutdir, fileInfo.name) + '.project';
             const runInfo = getTranscryptProjectInfo(runInfoFile)

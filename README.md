@@ -104,7 +104,7 @@ _Note that the `--outdir` directive is not valid for Transcrypt version 3.7 and 
   
   For example, if Parcel sees a Python file specified as the `src` in an HTML script tag, it will have Transcrypt generate the Javascript file and then automatically update the HTML script tag with the name of the generated JavaScript file. 
   
-  As a bonus, anytime you make a change to one of your Python files while Parcel has it's development server running in "watch" mode, your updated Python files will automatically be Transpiled by Transcrypt.
+  As a bonus, anytime you make a change to one of your Python files while Parcel has it's development server running in "watch" mode, your updated Python files will automatically be re-transpiled by Transcrypt.
 - **_How does this plugin compare to the one for Parcel V1?_**  
   _It is very similar:_
   - It mostly works seamlessly with the default configuration
