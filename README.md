@@ -72,6 +72,7 @@ To override the default settings for Transcrypt, you can add a `"parcel-transfor
 ```json
   "parcel-transformer-transcrypt": {
     "transcryptVersion": "3.9",
+    "watchAllFiles": true,
     "command": "python -m transcrypt",
     "arguments": [
       "--nomin",
@@ -80,7 +81,9 @@ To override the default settings for Transcrypt, you can add a `"parcel-transfor
     ]
   }
 ```
-The `"transcryptVersion"`, `"command"`, and `"arguments"` keys are all optional.  Default values wil be used if not supplied.
+The `"transcryptVersion"`, `"command"`, `"watchAllFiles"`, and `"arguments"` keys are all optional.  Default values wil be used if not supplied.
+
+If the `watchAllFiles` key is missing or set to `true`, all Python files that are processed by Transcrypt will be added to Parcel's file watch.  If this key is set to `false`, only the initial entry point file will be watched. 
 
 Transcrypt normally puts the files it generates in a folder called `__target__` that is created in the same folder as the source files you are processing. This default behavior may not be desired in many cases.  
 

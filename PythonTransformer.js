@@ -22,6 +22,7 @@ const OUTPUT_DIR = '.build'
 const DEFAULT_PACKAGE_CONFIG = {
     "parcel-transformer-transcrypt": {
         "transcryptVersion": "3.9",
+        "watchAllFiles": true,
         "command": "python -m transcrypt",
         "arguments": [
             /*  note that --build should normally not be used because multiple .py entry points         */
@@ -215,26 +216,30 @@ exports.default = new Transformer({
 
         // If in dev mode, get the Transcrypt Python module list and add
         // each Python file that was processed to the Parcel watched files
-        // TODO: Add option in config to skip file watch
         if (options.mode === 'development') {
-            const runInfoFile = path.join(absoluteOutdir, fileInfo.name) + '.project';
-            const runInfo = getTranscryptProjectInfo(runInfoFile)
-            if (runInfo.hasOwnProperty('modules')) {
-                const modules = runInfo['modules'];
-                const transcryptModules = path.join('site-packages', 'transcrypt');
-                const onlySourceModules = modules.filter(module => !module['source'].includes(transcryptModules))
-                onlySourceModules.forEach((module) => {
-                    let absoluteModulePath = module['source'];
-                    if (!path.isAbsolute(absoluteModulePath)) {
-                        absoluteModulePath = path.join(projectRoot, module['source']);
-                    }
-                    asset.invalidateOnFileChange(absoluteModulePath)
-                    // logger.info({message: `Watching file '${absoluteModulePath}'`});
-                });
+            let watchFiles = pkgConfig['watchAllFiles'];
+            if (watchFiles === undefined || watchFiles) {
+                const runInfoFile = path.join(absoluteOutdir, fileInfo.name) + '.project';
+                const runInfo = getTranscryptProjectInfo(runInfoFile)
+                if (runInfo.hasOwnProperty('modules')) {
+                    const modules = runInfo['modules'];
+                    const transcryptModules = path.join('site-packages', 'transcrypt');
+                    const onlySourceModules = modules.filter(module => !module['source'].includes(transcryptModules))
+                    onlySourceModules.forEach((module) => {
+                        let absoluteModulePath = module['source'];
+                        if (!path.isAbsolute(absoluteModulePath)) {
+                            absoluteModulePath = path.join(projectRoot, module['source']);
+                        }
+                        asset.invalidateOnFileChange(absoluteModulePath)
+                        logger.info({message: `Watching file '${absoluteModulePath}'`});
+                    });
+                } else {
+                    const msg1 = `\nUnable to load Transcrypt project file after build: '${runInfoFile}'`;
+                    const msg2 = "WARNING: Source files were not added to Parcel watch.";
+                    logger.warn({message: `${msg1}\n${msg2}`});
+                }
             } else {
-                const msg1 = `\nUnable to load Transcrypt project file after build: '${runInfoFile}'`;
-                const msg2 = "WARNING: Source files were not added to Parcel watch.";
-                logger.warn({message: `${msg1}\n${msg2}`});
+                logger.warn({message: `Skipping adding files to Parcel watch`});
             }
         }
 
