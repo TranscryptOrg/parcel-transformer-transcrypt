@@ -231,7 +231,7 @@ exports.default = new Transformer({
                             absoluteModulePath = path.join(projectRoot, module['source']);
                         }
                         asset.invalidateOnFileChange(absoluteModulePath)
-                        logger.info({message: `Watching file '${absoluteModulePath}'`});
+                        // logger.info({message: `Watching file '${absoluteModulePath}'`});
                     });
                 } else {
                     const msg1 = `\nUnable to load Transcrypt project file after build: '${runInfoFile}'`;
