@@ -47,16 +47,8 @@ Note that when run, before the build process starts, this transformer will autom
 To bypass this auto-detect behavior, you can explicitly specify the Transcrypt version in the _package.json_ file as indicated in the next section.
 
 ### Configuration
-Set up your dev and build scripts to build your project in the _package.json_ file for the project.
 
-An example of scripts in the _package.json_ file for Parcel might look similar to this:
-```json
-  "scripts": {
-    "start": "NODE_ENV=development parcel --log-level info src/index.html --dist-dir dist/dev --port 8080",
-    "build": "NODE_ENV=production parcel build --log-level info src/index.html --no-source-maps --dist-dir dist/prod --no-cache"
-  }
-```
-You will also need to create a _.parcelrc_ file in the same folder as the _package.json_ file to let Parcel know how to handle the Python files:
+You will need to create a _.parcelrc_ file in the same folder as the _package.json_ file to let Parcel know how to handle the Python files:
 
 _.parcelrc_
 ```json
@@ -100,6 +92,17 @@ The output folder you specify in the arguments should be relative to the project
 
 _Note that the `--outdir` directive is not valid for Transcrypt version 3.7 and will be ignored in that case._
 
+You can also set up build scripts in the _package.json_ file for Parcel that might look similar to this:
+```json
+  "scripts": {
+    "start": "NODE_ENV=development parcel --log-level info src/index.html --dist-dir dist/dev --port 8080",
+    "build": "NODE_ENV=production parcel build --log-level info src/index.html --no-source-maps --dist-dir dist/prod --no-cache"
+  }
+```
+The `npm start` script would run Parcel in development mode that starts up a development web server and watches source files for changes.
+
+The `npm run build` script builds the application for production then exits. 
+
 
 ### FAQ
 - **_What does this Parcel plugin do?_**  
@@ -135,4 +138,4 @@ This has been tested with:
 
 
 If you are using Linux and start getting errors stating *"No space left on device"*, see the Parcel website for [how to fix it](https://parceljs.org/features/development/#linux%3A-no-space-left-on-device).
-OS
+
