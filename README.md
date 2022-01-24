@@ -124,7 +124,7 @@ _Note that the `--outdir` directive is not valid for Transcrypt version 3.7 and 
 
 ### Notes
 This has been tested with:
-- Linux OS
+- Linux Ubuntu 18
 - Windows 10
 - Python/Transcrypt version 3.9
 - Python/Transcrypt version 3.7
@@ -135,4 +135,4 @@ This has been tested with:
 
 
 If you are using Linux and start getting errors stating *"No space left on device"*, see the Parcel website for [how to fix it](https://parceljs.org/features/development/#linux%3A-no-space-left-on-device).
-
+OS
