@@ -246,9 +246,9 @@ exports.default = new Transformer({
         // Rather than read in and pass back the generated JavaScript code, we just add
         // a JS export here that points to the target file. For reference, this is the
         // same approach that the Parcel V1 transcrypt plugin used.
-        let importPath = path.join(outdir, fileInfo.name) + '.js';
-        if (!importPath.startsWith('..' + path.sep)) {
-            importPath = '.' + path.sep + importPath
+        let importPath = outdir + '/' + fileInfo.name + '.js';
+        if (!importPath.startsWith('../')) {
+            importPath = './' + importPath
         }
 
         // And finally we send it back to Parcel for bundling
