@@ -2,7 +2,7 @@
 ### A Python to JavaScript transformer for Parcel V2 using the Transcrypt transpiler
 _This Parcel transformer is in beta mode and still a work in progress._
 
-Let us know if it's working on your platform and build environment in [GitHub discussions](https://github.com/JennaSys/parcel-transformer-transcrypt/discussions).
+Let us know if it's working on your platform and build environment in [GitHub discussions](https://github.com/JennaSys/parcel-transformer-transcrypt/discussions/4).
 
 On the other hand, if you find a problem with it, please [submit an issue on GitHub](https://github.com/JennaSys/parcel-transformer-transcrypt/issues) and help make it better.
 
