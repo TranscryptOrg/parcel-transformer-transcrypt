@@ -74,7 +74,7 @@ To override the default settings for Transcrypt, you can add a `"parcel-transfor
     ]
   }
 ```
-The `"transcryptVersion"`, `"command"`, `"watchAllFiles"`, and `"arguments"` keys are all optional.  Default values wil be used if not supplied.
+The `"transcryptVersion"`, `"watchAllFiles"`, `"command"`, and `"arguments"` keys are all optional.  Default values wil be used if not supplied.
 
 If the `watchAllFiles` key is missing or set to `true`, all Python files that are processed by Transcrypt will be added to Parcel's file watch.  If this key is set to `false`, only the initial entry point file will be watched. 
 
@@ -128,14 +128,12 @@ The `npm run build` script builds the application for production then exits.
 
 ### Notes
 This has been tested with:
-- Linux Ubuntu 18
+- Linux Mint 19/Ubuntu 18
 - Windows 10
-- Python/Transcrypt version 3.9
-- Python/Transcrypt version 3.7
-- Node version 16
-- Node version 14
-- npm version 8
-- npm version 6
+- macOS Monterey
+- Python/Transcrypt version 3.7 & 3.9
+- Node versions 14, 15, 16
+- npm versions 6, 7, 8
 
 
 If you are using Linux and start getting errors stating *"No space left on device"*, see the Parcel website for [how to fix it](https://parceljs.org/features/development/#linux%3A-no-space-left-on-device).
