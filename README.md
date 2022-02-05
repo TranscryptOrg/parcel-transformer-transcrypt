@@ -1,5 +1,5 @@
 # parcel-transformer-transcrypt
-### A Python to JavaScript transformer for Parcel V2 using the Transcrypt transpiler
+### A Python to JavaScript transformer for Parcel v2 using the Transcrypt transpiler
 _This Parcel transformer is in beta mode and still a work in progress._
 
 Let us know if it's working on your platform and build environment in [GitHub discussions](https://github.com/JennaSys/parcel-transformer-transcrypt/discussions/4).
@@ -18,7 +18,7 @@ npm install https://github.com/JennaSys/parcel-transformer-transcrypt --save-dev
 ```
 
 ### Dependencies
-Obviously Parcel V2 must be installed:
+Obviously Parcel v2 must be installed:
 
 ```bash
 npm install parcel -D
@@ -112,7 +112,7 @@ The `npm run build` script builds the application for production then exits.
   For example, if Parcel sees a Python file specified as the `src` in an HTML script tag, it will have Transcrypt generate the Javascript file and then automatically update the HTML script tag with the name of the generated JavaScript file. 
   
   As a bonus, anytime you make a change to one of your Python files while Parcel has it's development server running in "watch" mode, your updated Python files will automatically be re-transpiled by Transcrypt.
-- **_How does this plugin compare to the one for Parcel V1?_**  
+- **_How does this plugin compare to the one for Parcel v1?_**  
   _It is very similar:_
   - It mostly works seamlessly with the default configuration
   - It installs as a JavaScript development dependency
