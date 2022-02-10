@@ -1,6 +1,6 @@
 # parcel-transformer-transcrypt
 ### A Python to JavaScript transformer for Parcel v2 using the Transcrypt transpiler
-_This Parcel transformer is in beta mode and still a work in progress._
+_This Parcel transformer is currently in beta._
 
 Let us know if it's working on your platform and build environment in [GitHub discussions](https://github.com/JennaSys/parcel-transformer-transcrypt/discussions/4).
 
