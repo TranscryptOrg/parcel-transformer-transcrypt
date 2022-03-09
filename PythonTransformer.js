@@ -116,6 +116,7 @@ exports.default = new Transformer({
         let transcryptVersion;
         let pkgVersion = pkgConfig['transcryptVersion'];
         if (pkgVersion) {
+            //  Match semver value on: 3.nn or 3.nn.nn -> Return just major.minor part of semver
             const re = /(^3\.\d{1,2})(?:\.\d{1,2})?$/g;
             matches = pkgVersion.matchAll(re);
             if (matches) {

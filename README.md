@@ -74,11 +74,11 @@ To override the default settings for Transcrypt, you can add a `"parcel-transfor
     ]
   }
 ```
-The `"transcryptVersion"`, `"watchAllFiles"`, `"command"`, and `"arguments"` keys are all optional.  Default values wil be used if not supplied.
+The `"transcryptVersion"`, `"watchAllFiles"`, `"command"`, and `"arguments"` keys are all optional.  Default values will be used if not supplied.
 
-If the `watchAllFiles` key is missing or set to `true`, all Python files that are processed by Transcrypt will be added to Parcel's file watch.  If this key is set to `false`, only the initial entry point file will be watched. 
+If the `watchAllFiles` key is missing or set to `true`, all Python files that are processed by Transcrypt will be added to Parcel's file watch.  If this key is set to `false`, only the initial entry point file will be watched.
 
-Transcrypt normally puts the files it generates in a folder called `__target__` that is created in the same folder as the source files you are processing. This default behavior may not be desired in many cases.  
+Transcrypt normally puts the files it generates in a folder called `__target__` that is created in the same folder as the source files you are processing. This default behavior may not be desired in many cases.
 
 If you are using Transcrypt 3.9 however, this Parcel transformer will put Transcrypt's generated files in a folder named `.build` that will be created in the root folder of the project (where the _package.json_ file resides and where you run `npm` commands from).
 You can override the location of this build folder by adding an argument to the configuration as shown above:

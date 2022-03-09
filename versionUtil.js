@@ -35,8 +35,10 @@ const getTranscryptCommand = (command) => {
 
 // Extract version by running base command and examining stdout
 const _getVersion = (command) => {
+    //  Match value on: Python n.nn.nn -> Return just major.minor part of semver
     let re = /[Pp]ython (\d\.\d{1,2})\.\d{1,2}/g;  // Assume regex for Python output
     if (command.includes('transcrypt')) {
+        //  Match value on: Transcrypt *Version n.nn.nn -> Return just major.minor part of semver
         re = /[Tt]ranscrypt .*[Vv]ersion (\d\.\d{1,2})\.\d{1,2}/g;
     }
     try {
