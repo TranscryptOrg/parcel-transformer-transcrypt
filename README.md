@@ -134,6 +134,7 @@ This has been tested with:
 - Python/Transcrypt version 3.7 & 3.9
 - Node versions 14, 15, 16
 - npm versions 6, 7, 8
+- parcel versions 2.2, 2.4
 
 
 If you are using Linux and start getting errors stating *"No space left on device"*, see the Parcel website for [how to fix it](https://parceljs.org/features/development/#linux%3A-no-space-left-on-device).
