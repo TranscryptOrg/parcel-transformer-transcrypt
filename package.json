@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/JennaSys/parcel-transformer-transcrypt"
+    "url": "https://github.com/TranscryptOrg/parcel-transformer-transcrypt.git"
   },
   "bugs": {
-    "url": "https://github.com/JennaSys/parcel-transformer-transcrypt/issues"
+    "url": "https://github.com/TranscryptOrg/parcel-transformer-transcrypt.git/issues"
   },
   "keywords": [
     "python",
