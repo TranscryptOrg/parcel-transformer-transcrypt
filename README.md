@@ -1,7 +1,7 @@
 # parcel-transformer-transcrypt
 ### A Python to JavaScript transformer for Parcel v2 using the Transcrypt transpiler
 
-If you find a problem with this Parcel transformer, please [submit an issue on GitHub](https://github.com/JennaSys/parcel-transformer-transcrypt/issues) and help make it better.
+If you find a problem with this Parcel transformer, please [submit an issue on GitHub](https://github.com/TranscryptOrg/parcel-transformer-transcrypt/issues) and help make it better.
 
 If you just have a question about how to use it, you can also post a message in [GitHub discussions](https://github.com/TranscryptOrg/parcel-transformer-transcrypt/discussions).
 
