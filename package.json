@@ -1,6 +1,6 @@
 {
   "name": "parcel-transformer-transcrypt",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Python to JavaScript transformer for Parcel V2 using the Transcrypt transpiler",
   "main": "PythonTransformer.js",
   "engines": {
