@@ -13,7 +13,7 @@ npm install parcel-transformer-transcrypt --save-dev
 
 To get the latest unpublished version, you can also install it directly from the GitHub repository:
 ```bash
-npm install https://github.com/JennaSys/parcel-transformer-transcrypt --save-dev
+npm install https://github.com/TranscryptOrg/parcel-transformer-transcrypt --save-dev
 ```
 
 ### Dependencies
